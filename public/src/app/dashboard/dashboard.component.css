@@ -1,0 +1,31 @@
+input[type=textarea] {
+    height: 50px;
+    width:500px;
+    outline: none;
+    padding: 5px;
+    border: solid 1px #b6b6b6;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    border: 1px solid #DDDDDD;
+
+}
+
+input[type=textarea]:focus {
+    height: 400px;
+      border: 1px solid rgba(81, 203, 238, 1);
+
+}
+
+
+    #post{
+    float:left;
+    width:75%;
+    overflow:hidden;
+    }
+    #news{
+    float:left;
+    width:25%;
+    overflow:hidden;
+    } 
