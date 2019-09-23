@@ -1,0 +1,16 @@
+
+/* #left_user_nav {
+    position: fixed-left; 
+    top: 0;
+    width:200px; 
+    height: 100%;
+    border: 2px blue; 
+    
+} */
+
+#main_center_nav{
+    position: fixed;
+    margin-left: 200px; 
+}
+
+
