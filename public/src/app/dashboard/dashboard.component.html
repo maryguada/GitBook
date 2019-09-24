@@ -1,15 +1,60 @@
 
-    <div class="container">
-        <div id="post">
-        <form (submit)="newPost()">
-            <input type="textarea" name="post" placeholder="post something...">
-        </form>
-        <button type="submit" class="btn btn-primary">post</button>
+<div class="container">
+    <div class="row">
+        <div class="container col-md-8 col-sm-12 p-2 m-3">
+            <form (submit)="newPost()">
+                <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+            </form>
+            <button type="submit" class="btn btn-primary">post</button>
+            <div class="container mt-3">
+                <h1>Posts</h1>
+                <div>
+                
+                <h4>Username:Howard</h4>
+                <p>posted on:2019/9/23</p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <h4>Username:Howard</h4>
+                <p>posted on:2019/9/23</p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <h4>Username:Howard</h4>
+                <p>posted on:2019/9/23</p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <h4>Username:Howard</h4>
+                <p>posted on:2019/9/23</p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <h4>Username:Howard</h4>
+                <p>posted on:2019/9/23</p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+            </div>
         </div>
-        <div id="news">
-            news feed
+
+        <div class="container col-md-3 col-sm-12 text-center p-2 ">
+            <h1>NewsFeed</h1><br>
+            <div *ngFor="let news of allnews">
+                <h3>{{news.title}}</h3>
+                <strong>Author:</strong><p>{{news.author}}</p>
+                <strong>Summary:</strong><p>{{news.description}}</p>
+                <strong><a href="{{news.url}}"target="_blank">Read full article</a></strong>
+                <br><br>
+                </div>
         </div>
-        <div id="post">
-            posts
-        </div>
+
+    </div>
     </div>
