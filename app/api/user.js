@@ -1,10 +1,17 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Post = require('../../models/Post')
 module.exports = (app, db) => {
 
     // GET ALL USERS
     app.get("/users", (req, res) =>
-        db.User.findAll().then((result) => res.json(result))
+        db.User.findAll({
+            include: [{
+                model: db.Post,
+                as: 'posts',
+                required: false
+            }]
+        }).then((result) => res.json(result))
     );
 
     // GET ONE USER BY PRIMARY KEY(ID)
