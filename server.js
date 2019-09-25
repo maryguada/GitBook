@@ -7,6 +7,11 @@ const appUser = require('./app/api/user')
 const db = require('./models')
 const User = require('./models').User
 const bodyParser = require('body-parser')
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views/');
 
 app.use(passport.initialize())
 app.use(bodyParser.urlencoded({
@@ -52,8 +57,29 @@ app.get('/user/signin/callback',
     res.redirect('/dashboard');
   });
 
+app.get('/chat', function(req, res) {
+  res.render("chat");
+})
+
 app.all("*", (req, res, next) => {
   res.sendFile(path.resolve("./public/dist/public/index.html"))
 });
+
+io.sockets.on('connection', function(socket) {
+  socket.on('username', function(username) {
+      socket.username = username;
+      io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+  });
+
+  socket.on('disconnect', function(username) {
+      io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+  })
+
+  socket.on('chat_message', function(message) {
+      io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+  });
+
+});
+
 
 app.listen(8000, () => console.log("listening on port 8000"));
