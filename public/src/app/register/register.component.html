@@ -3,22 +3,32 @@
     <div class="container col-7 border mt-2 shadow p-3 bg-light rounded">
         <a href="" class="badge badge-secondary" [routerLink]="['/']">Cancel</a>
         <h1 class="text-center">GitBook Logo</h1>
-        <form (submit)="onSubmitRegister" class="container col-8">
+        
+        <form (submit)="onSubmitRegister()" class="container col-8">
             <div class="form-group">
+
                 <label for="name">Name:</label>
-                <input class="form-control" type="text" name="">
+                <input class="form-control" type="text" name="newUser.name" [(ngModel)]="newUser.name">
+                <small class="text-danger d-block" *ngIf="err.name!=null">{{err.name}}</small>
+
             </div>
             <div class="form-group">
                 <label for="name">Username:</label>
-                <input class="form-control" type="text" name="">
+                <input class="form-control" type="text" name="newUser.username" [(ngModel)]="newUser.username">
+                <small class="text-danger d-block" *ngIf="err.username!=null">{{err.username}}</small>
+
             </div>
             <div class="form-group">
                 <label for="name">Password:</label>
-                <input class="form-control" type="password" name="">
+                <input class="form-control" type="password" name="newUser.password" [(ngModel)]="newUser.password">
+                <small class="text-danger d-block" *ngIf="err.username!=null">{{err.password}}</small>
+
             </div>
             <div class="form-group">
                 <label for="name">Confirm password:</label>
-                <input class="form-control" type="password" name="">
+                <input class="form-control" type="password" name="newUser.confpassword" [(ngModel)]="newUser.confpassword">
+                <small class="text-danger d-block" *ngIf="err.username!=null">{{err.confpassword}}</small>
+
             </div>
             <button class="btn btn-dark form-control mb-3">Register</button>
         </form>

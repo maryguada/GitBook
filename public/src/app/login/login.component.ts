@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   constructor(private _httpService: HttpService) { }
 
   ngOnInit() {
+    
   }
-
+  
 }

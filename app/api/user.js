@@ -25,7 +25,7 @@ module.exports = (app, db) => {
                 if (req.body.password.length < 8) {
                     hashed = req.body.password;
                 }
-                db.User.create({ username: req.body.username, password: hashed })
+                db.User.create({ name: req.body.name, username: req.body.username, password: hashed })
                     .then(newUser => {
                         let payload = { subject: newUser.id }
                         let token = jwt.sign(payload, 'sweetpatatas')

@@ -8,7 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component'
+import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { RegisterComponent } from './register/register.component'
     RegisterComponent
   ],
   imports: [
+    FormsModule, 
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
