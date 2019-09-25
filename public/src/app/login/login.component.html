@@ -1,6 +1,20 @@
 <div class="container">
     <div class="container col-7 border mt-5 shadow p-3 bg-light rounded">
         <h1 class="text-center">GitBook Logo</h1>
-
+        <form (submit)="onSubmitLogin" class="container col-8">
+            <div class="form-group">
+                <input class="form-control" type="text" name="" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="" placeholder="Password">
+            </div>
+            <button class="btn btn-primary form-control">Login</button>
+            <p><a href="" [routerLink]="['/register']">Create an account</a></p>
+        </form>
+        <hr>
+        <div class="text-center">
+            <p class="m-0">Or sign in with:</p>
+            <a href="/auth/github"><i class="fab fa-github-square" style="font-size: 50px; color: #333"></i></a>
+        </div>
     </div>
 </div>
