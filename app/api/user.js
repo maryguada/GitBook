@@ -1,10 +1,17 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Post = require('../../models/Post')
 module.exports = (app, db) => {
 
     // GET ALL USERS
     app.get("/users", (req, res) =>
-        db.User.findAll().then((result) => res.json(result))
+        db.User.findAll({
+            include: [{
+                model: db.Post,
+                as: 'posts',
+                required: false
+            }]
+        }).then((result) => res.json(result))
     );
 
     // GET ONE USER BY PRIMARY KEY(ID)
@@ -25,7 +32,7 @@ module.exports = (app, db) => {
                 if (req.body.password.length < 8) {
                     hashed = req.body.password;
                 }
-                db.User.create({ username: req.body.username, password: hashed })
+                db.User.create({ name: req.body.name,username: req.body.username, password: hashed })
                     .then(newUser => {
                         let payload = { subject: newUser.id }
                         let token = jwt.sign(payload, 'sweetpatatas')

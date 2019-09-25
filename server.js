@@ -4,6 +4,7 @@ const path = require('path')
 const GitHubStrategy = require('passport-github').Strategy;
 const passport = require('passport')
 const appUser = require('./app/api/user')
+const appPost = require('./app/api/post')
 const db = require('./models')
 const User = require('./models').User
 const bodyParser = require('body-parser')
@@ -46,6 +47,7 @@ passport.use(new GitHubStrategy({
 ));
 
 appUser(app, db)
+appPost(app, db)
 
 app.get('/auth/github',
   passport.authenticate('github'));
