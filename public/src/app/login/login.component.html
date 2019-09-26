@@ -1,15 +1,14 @@
 <div class="container">
-    <div class="container col-7 border mt-5 shadow p-3 bg-light rounded">
+    <div class="container col-md-9 col-lg-7 col-xs-12 border mt-5 shadow p-3 bg-light rounded">
         <h1 class="text-center">GitBook Logo</h1>
         <form (submit)="onSubmitLogin()" class="container col-8">
+            <small class="text-danger d-block" *ngIf="err.error!=null">{{err.error}}</small>
             <div class="form-group">
-                <input class="form-control" type="text" name="" placeholder="Username">
-
+                <input class="form-control" type="text" name="user.username" placeholder="Username" [(ngModel)]="user.username">
             </div>
 
             <div class="form-group">
-                <input class="form-control" type="password" name="" placeholder="Password">
-
+                <input class="form-control" type="password" name="user.password" placeholder="Password" [(ngModel)]="user.password">
             </div>
 
             <button class="btn btn-primary form-control">Login</button>

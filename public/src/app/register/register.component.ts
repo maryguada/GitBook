@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit {
       "password": "",
       "confpassword": ""
     }
+
     this.err = {
       "name": "",
       "username": "",
@@ -33,12 +34,14 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmitRegister() {
-    if (this.newUser.password != this.newUser.confpassword) {
-      this.err["confpassword"] = "Confirm password must be the same as password"
-    }
     this._httpService.createUser(this.newUser)
       .then(data => {
-        if (data['result'] === "failed") {
+        var result = data['result']
+        if (this.newUser.password != this.newUser.confpassword) {
+          this.err["confpassword"] = "Confirm password must be the same as password"
+          result = "failed";
+        }
+        if (result === "failed") {
           console.log(data)
           for (let error of data['data']['errors']) {
             this.err[error.path] = error.message;

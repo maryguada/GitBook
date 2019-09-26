@@ -27,20 +27,27 @@ module.exports = (app, db) => {
 
     // CREATE USER VIA BCRYPT(WITH TOKEN)
     app.post("/user", (req, res) => {
-        bcrypt.hash(req.body.password, 10)
-            .then(hashed => {
-                if (req.body.password.length < 8) {
-                    hashed = req.body.password;
+        db.User.findOne({ where: { username: req.body.username } })
+            .then(result => {
+                if (result!=null) {
+                    res.json({ "result": "failed", "data": {"errors": [{"message": "This username is already taken", "path":"username"}]} })
+                } else {
+                    bcrypt.hash(req.body.password, 10)
+                        .then(hashed => {
+                            if (req.body.password.length < 8) {
+                                hashed = req.body.password;
+                            }
+                            db.User.create({ name: req.body.name, username: req.body.username, password: hashed })
+                                .then(newUser => {
+                                    let payload = { subject: newUser.id }
+                                    let token = jwt.sign(payload, 'sweetpatatas')
+                                    res.json({ "result": "success", "data": token })
+                                })
+                                .catch(err => res.json({ "result": "failed", "data": err }))
+                        })
+                        .catch(err => res.json(err))
                 }
-                db.User.create({ name: req.body.name, username: req.body.username, password: hashed })
-                    .then(newUser => {
-                        let payload = { subject: newUser.id }
-                        let token = jwt.sign(payload, 'sweetpatatas')
-                        res.json({ "result": "success", "data": token })
-                    })
-                    .catch(err => res.json({ "result": "failed", "data": err }))
             })
-            .catch(err => res.json(err))
     }
     );
 
@@ -50,6 +57,9 @@ module.exports = (app, db) => {
 
         db.User.findOne({ where: { username: userData.username } })
             .then(result => {
+                if (result['password'] == null) {
+                    res.json({ "result": "failed", "error": "Login failed" })
+                }
                 if (result == null) {
                     res.json({ "result": "failed", "error": "Login failed" })
                 } else {
