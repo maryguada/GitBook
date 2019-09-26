@@ -13,7 +13,11 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+<<<<<<< HEAD
     "ejs": "^2.7.1",
+=======
+    "cors": "^2.8.5",
+>>>>>>> 6a01dde50a505c4607ff3ff72c76324917e25586
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "jsonwebtoken": "^8.5.1",
@@ -22,8 +26,14 @@
     "ngx-infinite-scroll": "^8.0.0",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
+    "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+<<<<<<< HEAD
     "sequelize": "^5.19.0",
     "socket.io": "^2.3.0"
+=======
+    "rand-token": "^0.4.0",
+    "sequelize": "^5.19.0"
+>>>>>>> 6a01dde50a505c4607ff3ff72c76324917e25586
   }
 }
