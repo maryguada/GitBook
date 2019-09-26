@@ -18,16 +18,17 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitLogin() {
-    this._httpService.validateUser(this.user)
-      .subscribe(data => {
-        if (data['result'] == 'failed') {
-          this.err['error'] = data['error'];
-          console.log(this.err)
-        } else {
-          localStorage.setItem('token', data['data'])
-          this._router.navigate(['/dashboard'])
-        }
+    this._httpService.login(this.user).subscribe(success => {
+      if (success) {
+        this._router.navigate(['/dashboard'])
+      }
     })
-}
-  
+  }
+
+  // gitAuth() {
+  //   this._httpService.githubAuth().subscribe(data=>{
+  //     console.log(data)
+  //   })
+  // }
+
 }

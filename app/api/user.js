@@ -1,18 +1,11 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Post = require('../../models/Post')
+
 module.exports = (app, db) => {
 
     // GET ALL USERS
-    app.get("/users", (req, res) =>
-        db.User.findAll({
-            include: [{
-                model: db.Post,
-                as: 'posts',
-                required: false
-            }]
-        }).then((result) => res.json(result))
-    );
+    
 
     // GET ONE USER BY PRIMARY KEY(ID)
     app.get("/user/:id", (req, res) =>
@@ -29,8 +22,8 @@ module.exports = (app, db) => {
     app.post("/user", (req, res) => {
         db.User.findOne({ where: { username: req.body.username } })
             .then(result => {
-                if (result!=null) {
-                    res.json({ "result": "failed", "data": {"errors": [{"message": "This username is already taken", "path":"username"}]} })
+                if (result != null) {
+                    res.json({ "result": "failed", "data": { "errors": [{ "message": "This username is already taken", "path": "username" }] } })
                 } else {
                     bcrypt.hash(req.body.password, 10)
                         .then(hashed => {
@@ -40,7 +33,7 @@ module.exports = (app, db) => {
                             db.User.create({ name: req.body.name, username: req.body.username, password: hashed })
                                 .then(newUser => {
                                     let payload = { subject: newUser.id }
-                                    let token = jwt.sign(payload, 'sweetpatatas')
+                                    let token = jwt.sign(payload, 'secretKey')
                                     res.json({ "result": "success", "data": token })
                                 })
                                 .catch(err => res.json({ "result": "failed", "data": err }))
@@ -52,31 +45,48 @@ module.exports = (app, db) => {
     );
 
     // LOGIN USER VALIDATE
-    app.post('/login', (req, res) => {
-        let userData = req.body
+    // app.post('/login', (req, res) => {
+    //     let userData = req.body
 
-        db.User.findOne({ where: { username: userData.username } })
-            .then(result => {
-                if (result['password'] == null) {
-                    res.json({ "result": "failed", "error": "Login failed" })
-                }
-                if (result == null) {
-                    res.json({ "result": "failed", "error": "Login failed" })
-                } else {
-                    bcrypt.compare(userData.password, result.password)
-                        .then(isValid => {
-                            if (isValid) {
-                                let payload = { subject: result.id }
-                                let token = jwt.sign(payload, 'sweetpatatas')
-                                res.json({ "result": "success", "data": token })
-                            } else {
-                                res.json({ "result": "failed", "error": "Login failed" })
-                            }
-                        })
-                        .catch(err => res.json(err))
-                }
-            })
-    })
+    //     db.User.findOne({ where: { username: userData.username } })
+    //         .then(result => {
+    //             if (result['password'] == null) {
+    //                 res.json({ "result": "failed", "error": "Login failed" })
+    //             }
+    //             if (result == null) {
+    //                 res.json({ "result": "failed", "error": "Login failed" })
+    //             } else {
+    //                 bcrypt.compare(userData.password, result.password)
+    //                     .then(isValid => {
+    //                         if (isValid) {
+    //                             const token = jwt.sign(result, 'VERY_SECRET_KEY!', { expiresIn: 600 })
+    //                             const refreshToken = randtoken.uid(256);
+    //                             refreshTokens[refreshToken] = result.username;
+    //                             res.json({ jwt: token, refreshToken: refreshToken });
+    //                         } else {
+    //                             res.json({ "result": "failed", "error": "Login failed" })
+    //                         }
+    //                     })
+    //                     .catch(err => res.json(err))
+    //             }
+    //         })
+    // })
+
+    app.post('/refresh', function (req, res) {
+        const refreshToken = req.body.refreshToken;
+        if (refreshToken in refreshTokens) {
+          const user = {
+            'username': refreshTokens[refreshToken],
+            'role': 'admin'
+          }
+          const token = jwt.sign(user, SECRET, { expiresIn: 600 });
+          res.json({jwt: token})
+        }
+        else {
+          res.sendStatus(401);
+        }
+    });
+    
 
     // EDIT ONE USER
     app.put("/user/:id", (req, res) =>
@@ -103,14 +113,15 @@ module.exports = (app, db) => {
 
     // TOKEN TESTING(IGNORE THIS)
     function verifyToken(req, res, next) {
+        console.log(req.headers)
         if (!req.headers.authorization) {
             return res.status(401).send('Unauthorized request')
         }
-        let token = req.headers.authorization.split(' ')[1];
+        let token = req.headers.authorization.split(' ')[1]
         if (token === 'null') {
             return res.status(401).send('Unauthorized request')
         }
-        let payload = jwt.verify(token, 'sweetpatatas')
+        let payload = jwt.verify(token, 'secretKey')
         if (!payload) {
             return res.status(401).send('Unauthorized request')
         }
