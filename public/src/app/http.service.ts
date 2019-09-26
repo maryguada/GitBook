@@ -10,4 +10,14 @@ export class HttpService {
 getAllNews(){
  return this._http.get("https://newsapi.org/v2/everything?q=tech&from=2019-09-23&sortBy=popularity&apiKey=44b0e2e4e0604086ab4ce55b311ebb48")
 }
+
+getAllPosts(){
+  return this._http.get("/posts");
+}
+
+getRecentPosts(count){
+  console.log("recent posts...", count)
+  return this._http.get("/recentposts/"+count);
+}
+
 }

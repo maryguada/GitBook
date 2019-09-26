@@ -4,13 +4,17 @@ import {DashboardComponent} from './dashboard/dashboard.component'
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  {path :'dashboard',component:HomeComponent, children: [
-    {path: '', component: DashboardComponent},
+  {path :'',component:HomeComponent, children: [
+    {path: 'dashboard', component: DashboardComponent},
+    {path: 'profile', component: ProfileComponent}
     ]},
-  {path: '', component: LoginComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: '**', component: DashboardComponent}
 
 ];
 

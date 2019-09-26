@@ -1,0 +1,61 @@
+<head>
+    <script src="jquery-3.4.1.min.js"></script>
+</head>
+<script>
+    $("p").hover(function(){
+        $(this).addClass("messageToggle");
+    })
+    $("#message").click(function(){
+        $("#messageBox").toggle();
+    })
+</script>
+<style>
+    html {
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+    ::-webkit-scrollbar {
+        width: 0px;  /* Remove scrollbar space */
+        background: transparent;  /* Optional: just make scrollbar invisible */
+    }
+    .whiteFont{
+        color:#F8F9FA;
+    }
+    .messageToggle{
+        color:yellow;
+        background:yellow;
+    }
+</style>
+
+<div class="container bg-light rounded" style="background-image:url('img/splash.jpg')">
+    <div class="container col-md-12 col-sm-12 p-2 m-3">
+        <div style="margin:auto;width:600px;text-align:center">
+            <img src="img/profile.jpg" style="margin:auto;height:200px;width:auto;display:block;border-radius:100px;box-shadow:0px 0px 20px 7px black">
+            <h1 style="color:white">Howard Chen</h1>
+            <p style="margin-top:-20px;color:white;display:inline-block">howiec@hotmail.com</p>
+            <i class="far fa-envelope fa-2x" style="height:50px;width:auto;display:inline-block"></i>
+        </div>
+        <div class="row">
+            <div id="message" class="col-md-11" style="background:white;padding:10px;border-radius:5px;margin:auto;margin-bottom:10px;box-shadow:0px 0px 10px 5px black">
+                <p style="display:inline-block;font-size:24px;font-weight:500">About: </p>
+                <a class="nav-link cool-link" href="/find_cinema" style="display:inline-block"><i class="fas fa-edit fa-2x" style="height:50px;width:auto"></i></a>
+                <p>I'm a biology student at UC Davis. I hope to make some new friends here. Americans make the BEST boba!! </p>
+            </div>
+            <div class="col-md-11" style="background:white;padding:10px;border-radius:5px;margin:auto;margin-bottom:10px;box-shadow:0px 0px 10px 5px black">
+                <p style="display:inline-block;font-size:24px;font-weight:500">Technical Skills:</p>
+                <a class="nav-link cool-link" href="/find_cinema" style="display:inline-block"><i class="fas fa-edit fa-2x" style="height:50px;width:auto"></i></a>
+                <p>HTML, CSS, Javascript</p>
+                <p>Python - Flask, Django</p>
+                <p>Java - SpringBoot</p>
+                <p>Full stack javascript - Node, Angular, Express</p>
+                <p>SQL, MongoDB</p>
+            </div>
+            <div class="col-md-11" style="background:white;padding:10px;border-radius:5px;margin:auto;margin-bottom:10px;box-shadow:0px 0px 10px 5px black">
+                <p style="font-size:24px;font-weight:500">Followers: 2</p>
+                <p style="font-size:24px;font-weight:500">Posts: <span>567</span></p>
+                <p style="font-size:24px;font-weight:500">Recent posts:</p>
+            </div>
+        </div>
+    </div>
+    <div id="messageBox" class="col-md-8" style="position:fixed;background:green;height:500px;width:500px;margin:auto;bottom:10%;left:30%;display:none"></div>
+</div>

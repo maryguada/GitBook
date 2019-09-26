@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public/dist/public'));
+app.use(express.static(__dirname + "/static"));
 
 passport.serializeUser((user, cb) => {
   cb(null, user)
