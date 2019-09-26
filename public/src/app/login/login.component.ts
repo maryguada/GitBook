@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   onSubmitLogin() {
     this._httpService.validateUser(this.user)
-      .then(data => {
+      .subscribe(data => {
         if (data['result'] == 'failed') {
           this.err['error'] = data['error'];
           console.log(this.err)
