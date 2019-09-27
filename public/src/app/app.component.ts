@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpService } from './http.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,6 @@ import { HttpService } from './http.service';
 })
 export class AppComponent {
   title = 'Gitbook';
-  constructor(private _httpService: HttpService) { }
+  constructor(private _httpService: HttpService) { 
+  }
 }

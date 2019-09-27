@@ -18,13 +18,19 @@ const Post = require('./models/Post')
 const bcrypt = require('bcrypt')
 const randtoken = require('rand-token')
 const refreshTokens = {};
-
+const session = require('express-session')
 const SECRET = 'VERY_SECRET_KEY!';
 const passportOpts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: SECRET
 };
 
+app.use(session({
+  secret: 'keyboardkitteh',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}))
 app.use(cors())
 app.use(authPassport.initialize())
 // app.use(gitPassport.initialize())
@@ -91,13 +97,12 @@ appPost(app, db)
 
 
 
-app.get("/users", authPassport.authenticate('jwt'), (req, res) =>
+app.get("/users", (req, res) =>
   User.findAll({
     include: [{
-      model: Post,
-      as: 'posts',
-      required: false
-    }]
+      all:true
+    }
+  ]
   }).then((result) => res.json(result))
 );
 
@@ -115,7 +120,7 @@ app.post('/login', (req, res) => {
         bcrypt.compare(userData.password, result.password)
           .then(isValid => {
             if (isValid) {
-              const token = jwt.sign({ user:result }, SECRET, { expiresIn: 600 })
+              const token = jwt.sign({ user: result }, SECRET, { expiresIn: 600 })
               console.log(token)
               const refreshToken = randtoken.uid(256);
               refreshTokens[refreshToken] = result.username;
@@ -129,6 +134,31 @@ app.post('/login', (req, res) => {
       }
     })
 })
+
+app.post('/logout', function (req, res) {
+  const refreshToken = req.body.refreshToken;
+  if (refreshToken in refreshTokens) {
+    delete refreshTokens[refreshToken];
+  }
+  res.sendStatus(204);
+});
+
+app.post('/refresh', function (req, res) {
+  const refreshToken = req.body.refreshToken;
+
+
+  if (refreshToken in refreshTokens) {
+    const user = {
+      'username': refreshTokens[refreshToken],
+      'role': 'admin'
+    }
+    const token = jwt.sign(user, SECRET, { expiresIn: 600 });
+    res.json({ jwt: token })
+  }
+  else {
+    res.sendStatus(401);
+  }
+});
 
 // app.post('/login', function (req, res) { 
 //   User.findOne({ where: { username: req.body.username } })

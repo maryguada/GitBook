@@ -33,6 +33,16 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
     // User hasMany Posts
     User.hasMany(models.Post, {as: 'posts'})
+    User.belongsToMany(models.User, {
+      through: 'UserFollowers',
+      as: 'followers',
+      foreignKey: 'userId',
+    })
+    User.belongsToMany(models.User, {
+      through: 'UserFollowers',
+      as: 'following',
+      foreignKey: 'followerId',
+    })
   };
   return User;
 };

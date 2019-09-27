@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import { config } from './config';
 import { catchError, mapTo, tap } from 'rxjs/operators';
@@ -14,6 +14,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) {
   }
+
   getAllNews() {
     return this.http.get("https://newsapi.org/v2/everything?q=tech&from=2019-09-23&sortBy=popularity&apiKey=44b0e2e4e0604086ab4ce55b311ebb48")
   }
@@ -24,7 +25,7 @@ export class HttpService {
     return this.http.post("/login", loginInfo).toPromise();
   }
   login(user): Observable<boolean> {
-    return this.http.post<any>(`${config.apiUrl}/login`, user)
+    return this.http.post<any>(`/login`, user)
       .pipe(
         tap(tokens => this.doLoginUser(user.username, tokens)),
         mapTo(true),

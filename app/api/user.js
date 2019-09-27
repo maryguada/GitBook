@@ -18,6 +18,18 @@ module.exports = (app, db) => {
             .then(result => res.json(result))
     );
 
+    // LIKE ONE USER 
+    app.post("/like/:id", (req,res)=>{
+        db.User.findByPk(4)
+        .then(myUser=>{
+            db.User.findByPk(1)
+            .then(otherUser=>{
+                myUser.addFollower(otherUser)
+                .then(()=>res.json('worked'))
+            })
+        })
+    })
+
     // CREATE USER VIA BCRYPT(WITH TOKEN)
     app.post("/user", (req, res) => {
         db.User.findOne({ where: { username: req.body.username } })
