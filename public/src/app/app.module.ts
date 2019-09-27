@@ -9,13 +9,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-<<<<<<< HEAD
 import { ProfileComponent } from './profile/profile.component';
-=======
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
 
->>>>>>> 6a01dde50a505c4607ff3ff72c76324917e25586
 
 @NgModule({
   declarations: [

@@ -25,7 +25,7 @@ module.exports = (app, db) => {
     app.post("/post/:userId", (req,res)=>{
         db.User.findByPk(req.params.userId)
         .then(user=>{
-            user.createPost({content: req.body.content, postedBy: user.name, caption: req.body.caption})
+            user.createPost({content: req.body.content, postedBy: user.name, caption: req.body.caption, tag1: req.body.tag1, tag2: req.body.tag2, tag3: req.body.tag3})
             .then(newPost=>res.json(newPost))
         })
     })
@@ -51,4 +51,13 @@ module.exports = (app, db) => {
             }
         }).then((result) => res.json(result))
     );
+
+    //SEARCH FOR TAG
+    app.get("/searchtags/:tag", (req,res) => {
+        db.Post.findAll({
+            where: {
+                tag1: req.params.tag
+            }
+        }).then((result) => res.json(result))
+    })
 }

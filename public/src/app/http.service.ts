@@ -8,29 +8,26 @@ import { Tokens } from './token'
   providedIn: 'root'
 })
 export class HttpService {
-<<<<<<< HEAD
-  constructor(private _http: HttpClient) { 
-}
-getAllNews(){
- return this._http.get("https://newsapi.org/v2/everything?q=tech&from=2019-09-23&sortBy=popularity&apiKey=44b0e2e4e0604086ab4ce55b311ebb48")
-}
-
-getAllPosts(){
-  return this._http.get("/posts");
-}
-
-getRecentPosts(count){
-  console.log("recent posts...", count)
-  return this._http.get("/recentposts/"+count);
-}
-
-=======
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private loggedUser: string;
 
   constructor(private http: HttpClient) {
   }
+  getAllPosts(){
+    return this.http.get("/posts");
+  }
+  
+  getRecentPosts(count){
+    console.log("recent posts...", count)
+    return this.http.get("/recentposts/"+count);
+  }
+
+  searchTags(tag){
+    console.log(tag)
+    return this.http.get("/searchtags/"+tag);
+  }
+
   getAllNews() {
     return this.http.get("https://newsapi.org/v2/everything?q=tech&from=2019-09-23&sortBy=popularity&apiKey=44b0e2e4e0604086ab4ce55b311ebb48")
   }
@@ -110,5 +107,4 @@ getRecentPosts(count){
   githubAuth(){
     return this.http.get('/auth/github');
   }
->>>>>>> 6a01dde50a505c4607ff3ff72c76324917e25586
 }

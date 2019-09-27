@@ -27,7 +27,16 @@ module.exports = {
       },
       postedBy: {
         type: Sequelize.STRING
-      }
+      },
+      tag1: {
+        type: Sequelize.STRING
+      },
+      tag2: {
+        type: Sequelize.STRING
+      },
+      tag3: {
+        type: Sequelize.STRING
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

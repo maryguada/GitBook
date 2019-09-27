@@ -10,6 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   newUser: any;
   err: {};
+  searchTags: any;
 
   constructor(private _httpService: HttpService,
     private _route: ActivatedRoute,

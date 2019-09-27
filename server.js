@@ -10,13 +10,6 @@ const appPost = require('./app/api/post')
 const db = require('./models')
 const User = require('./models').User
 const bodyParser = require('body-parser')
-<<<<<<< HEAD
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views/');
-=======
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -25,7 +18,6 @@ const Post = require('./models/Post')
 const bcrypt = require('bcrypt')
 const randtoken = require('rand-token')
 const refreshTokens = {};
->>>>>>> 6a01dde50a505c4607ff3ff72c76324917e25586
 
 const SECRET = 'VERY_SECRET_KEY!';
 const passportOpts = {
@@ -139,12 +131,6 @@ app.post('/login', (req, res) => {
     })
 })
 
-<<<<<<< HEAD
-app.get('/chat', function(req, res) {
-  res.render("chat");
-})
-
-=======
 // app.post('/login', function (req, res) { 
 //   User.findOne({ where: { username: req.body.username } })
 //   .then(data=>{
@@ -156,26 +142,10 @@ app.get('/chat', function(req, res) {
 //   })
 // });
 // console.log(refreshTokens)
->>>>>>> 6a01dde50a505c4607ff3ff72c76324917e25586
 app.all("*", (req, res, next) => {
   res.sendFile(path.resolve("./public/dist/public/index.html"))
 });
 
-io.sockets.on('connection', function(socket) {
-  socket.on('username', function(username) {
-      socket.username = username;
-      io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
-  });
-
-  socket.on('disconnect', function(username) {
-      io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
-  })
-
-  socket.on('chat_message', function(message) {
-      io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
-  });
-
-});
 
 
 app.listen(8000, () => console.log("listening on port 8000"));
