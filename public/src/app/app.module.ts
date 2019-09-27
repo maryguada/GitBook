@@ -10,12 +10,15 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
+
 import { TokenInterceptor } from './token-interceptor';
 import { EditorComponent } from './editor/editor.component';
 import { CommonModule } from '@angular/common';
+
 import { QuillModule } from 'ngx-quill'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +34,6 @@ import { QuillModule } from 'ngx-quill'
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
     QuillModule.forRoot(),
     CommonModule
   ],

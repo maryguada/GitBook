@@ -61,6 +61,13 @@ module.exports = (app, db) => {
         }).then((result) => res.json(result))
     );
 
+    //SEARCH FOR TAG
+    app.get("/searchtags/:tag", (req,res) => {
+        db.Post.findAll({
+            where: {
+                tag1: req.params.tag
+            }
+        }).then((result) => res.json(result))
     // ADD COMMENT TO POST
     app.post("/comment/:id", (req, res) => {
         db.Post.findByPk(req.params.id)
@@ -95,5 +102,6 @@ module.exports = (app, db) => {
                             .then(() => res.json('post unliked!'))
                     })
             })
+        })
     })
 }

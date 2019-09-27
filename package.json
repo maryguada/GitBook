@@ -13,6 +13,10 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+<<<<<<< HEAD
+    "ejs": "^2.7.1",
+=======
+>>>>>>> f7fb1ea4c594b846bef54d473c0ba95176e17f32
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
