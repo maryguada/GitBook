@@ -14,7 +14,14 @@ export class HttpService {
 
   constructor(private http: HttpClient) {
   }
-
+  getAllPosts(){
+    return this.http.get("/posts");
+  }
+  
+  getRecentPosts(count){
+    console.log("recent posts...", count)
+    return this.http.get("/recentposts/"+count);
+  }
   getAllNews() {
     return this.http.get("https://newsapi.org/v2/everything?q=tech&from=2019-09-23&sortBy=popularity&apiKey=44b0e2e4e0604086ab4ce55b311ebb48")
   }
@@ -89,9 +96,5 @@ export class HttpService {
   private removeTokens() {
     localStorage.removeItem(this.JWT_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
-  }
-
-  githubAuth(){
-    return this.http.get('/auth/github');
   }
 }

@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Post = require('../../models/Post')
-
 module.exports = (app, db) => {
 
     // GET ALL USERS
@@ -14,7 +13,7 @@ module.exports = (app, db) => {
 
     // GET ONE USER BY USERNAME
     app.get("/getUser", (req, res) =>
-        db.User.findOne({ where: { username: req.body.username } })
+        db.User.findOne({ where: { username: sessionUser.username } })
             .then(result => res.json(result))
     );
 
@@ -134,9 +133,7 @@ module.exports = (app, db) => {
             return res.status(401).send('Unauthorized request')
         }
         let payload = jwt.verify(token, 'secretKey')
-        if (!payload) {
-            return res.status(401).send('Unauthorized request')
-        }
+
         req.userId = payload.subject
         next()
     }

@@ -10,6 +10,10 @@ const appPost = require('./app/api/post')
 const db = require('./models')
 const User = require('./models').User
 const bodyParser = require('body-parser')
+const http = require('http').Server(app);
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views/');
+
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -18,7 +22,9 @@ const Post = require('./models/Post')
 const bcrypt = require('bcrypt')
 const randtoken = require('rand-token')
 const refreshTokens = {};
+
 const session = require('express-session')
+
 const SECRET = 'VERY_SECRET_KEY!';
 const passportOpts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -33,6 +39,7 @@ app.use(session({
 }))
 app.use(cors())
 app.use(authPassport.initialize())
+app.use(authPassport.session());
 // app.use(gitPassport.initialize())
 app.use(bodyParser.urlencoded({
   extended: true
@@ -40,6 +47,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public/dist/public'));
+app.use(express.static(__dirname + "/static"));
 
 
 // gitPassport.serializeUser((user, cb) => {
@@ -135,6 +143,7 @@ app.post('/login', (req, res) => {
     })
 })
 
+
 app.post('/logout', function (req, res) {
   const refreshToken = req.body.refreshToken;
   if (refreshToken in refreshTokens) {
@@ -160,6 +169,11 @@ app.post('/refresh', function (req, res) {
   }
 });
 
+
+app.get('/chat', function(req, res) {
+  res.render("chat");
+})
+
 // app.post('/login', function (req, res) { 
 //   User.findOne({ where: { username: req.body.username } })
 //   .then(data=>{
@@ -174,5 +188,7 @@ app.post('/refresh', function (req, res) {
 app.all("*", (req, res, next) => {
   res.sendFile(path.resolve("./public/dist/public/index.html"))
 });
+
+
 
 app.listen(8000, () => console.log("listening on port 8000"));

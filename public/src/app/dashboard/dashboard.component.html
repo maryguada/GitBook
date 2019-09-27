@@ -1,53 +1,36 @@
+<script>
+    $(".posts").fadeIn(3000);
+</script>
+<style>
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 
-<div class="container bg-light rounded">
+</style>
+<div class="container bg-light rounded" style="height:1000px">
     <div class="row">
-        <div class="container col-md-8 col-sm-12 p-2 m-3 border-right">
-            <form (submit)="newPost()">
-                <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
-            </form>
-            <button type="submit" class="btn btn-primary mt-2">Post</button>
-            <div class="container mt-3">
+        <div class="container col-md-8 col-sm-12 p-2 m-3 border-right" style="overflow:auto;height:982px" (scroll)="onScroll($event)">
                 <h1>Posts</h1>
-                <div>
-                
-                <h4>Username:Howard</h4>
-                <p>posted on:2019/9/23</p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                <h4>Username:Howard</h4>
-                <p>posted on:2019/9/23</p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                <h4>Username:Howard</h4>
-                <p>posted on:2019/9/23</p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                <h4>Username:Howard</h4>
-                <p>posted on:2019/9/23</p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                <h4>Username:Howard</h4>
-                <p>posted on:2019/9/23</p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
-            </div>
+                <div class="container mt-3" class="search-results">
+                    <div class="posts" *ngFor="let post of recentPosts" style="box-shadow:0px 0px 15px 5px #d1d1d1;padding:20px;border-radius:5px;margin-bottom:20px;border:solid 1px black">
+                            <h1>{{post.caption}}</h1>
+                            <p style="margin-top:-10px">Posted by: {{post.postedBy}} on <span style="font-weight:700">{{post.createdAt}}</span></p>
+                            <p>{{post.content}}</p>
+                        </div>
+                        <div style="text-align:center" *ngIf="loading == true">
+                            <img src="img/loader.gif" style="height:70px;width:70px">
+                        </div>
+                    </div>
         </div>
 
-        <div class="container col-md-3 col-sm-12 text-center p-2 ">
+        <div class="container col-md-3 col-sm-12 text-center p-2 " style="height:997px;overflow:auto">
             <h1>NewsFeed</h1><br>
-            <div *ngFor="let news of allnews">
+            <div *ngFor="let news of allnews" style="box-shadow:0px 0px 5px 2px #d1d1d1;border-radius:5px;margin-bottom:15px;padding:10px;border:solid 1px black">
                 <h3>{{news.title}}</h3>
                 <strong>Author:</strong><p>{{news.author}}</p>
                 <strong>Summary:</strong><p>{{news.description}}</p>
@@ -55,6 +38,5 @@
                 <br><br>
                 </div>
         </div>
-
     </div>
     </div>

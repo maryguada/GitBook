@@ -1,18 +1,18 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('posts', {
+    return queryInterface.createTable('comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      caption: {
+      commented_by: {
         type: Sequelize.STRING
       },
-      content: {
-        type: Sequelize.TEXT
+      comment: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -22,15 +22,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      postId: {
         type: Sequelize.INTEGER
-      },
-      postedBy: {
-        type: Sequelize.STRING
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('posts');
+    return queryInterface.dropTable('comments');
   }
 };

@@ -5,8 +5,19 @@ module.exports = (app, db) => {
 
     // GET ALL POSTS
     app.get("/posts", (req, res) =>
-        db.Post.findAll().then((result) => res.json(result))
+        db.Post.findAll({include: [{
+            all:true
+          }
+        ]}).then((result) => res.json(result))
     );
+
+    // GET RECENT POSTS
+    app.get("/recentposts/:count", (req, res) => {
+        db.Post.findAll({
+            limit: Number(req.params.count),
+            order: [['createdAt', 'DESC']]
+        }).then((result) => res.json(result))
+    });
 
     // GET ONE POST BY PRIMARY KEY(ID)
     app.get("/post/:id", (req, res) =>
@@ -17,7 +28,7 @@ module.exports = (app, db) => {
     app.post("/post/:userId", (req,res)=>{
         db.User.findByPk(req.params.userId)
         .then(user=>{
-            user.createPost(req.body)
+            user.createPost({content: req.body.content, postedBy: user.name, caption: req.body.caption})
             .then(newPost=>res.json(newPost))
         })
     })
@@ -43,4 +54,13 @@ module.exports = (app, db) => {
             }
         }).then((result) => res.json(result))
     );
+
+    // ADD COMMENT TO POST
+    app.post("/comment/:id", (req,res)=>{
+        db.Post.findByPk(req.params.id)
+        .then(myPost=>{
+            myPost.createComment(req.body)
+            .then(()=>res.json('Comment added'))
+        })
+    })
 }
