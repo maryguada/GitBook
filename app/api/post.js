@@ -5,17 +5,23 @@ module.exports = (app, db) => {
 
     // GET ALL POSTS
     app.get("/posts", (req, res) =>
-        db.Post.findAll({include: [{
-            all:true
-          }
-        ]}).then((result) => res.json(result))
+        db.Post.findAll({
+            include: [{
+                all: true
+            }
+            ]
+        }).then((result) => res.json(result))
     );
 
     // GET RECENT POSTS
     app.get("/recentposts/:count", (req, res) => {
         db.Post.findAll({
             limit: Number(req.params.count),
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            include: [{
+                all: true
+            }
+            ]
         }).then((result) => res.json(result))
     });
 
@@ -25,12 +31,12 @@ module.exports = (app, db) => {
     );
 
     // CREATE POST BY USER
-    app.post("/post/:userId", (req,res)=>{
+    app.post("/post/:userId", (req, res) => {
         db.User.findByPk(req.params.userId)
-        .then(user=>{
-            user.createPost({content: req.body.content, postedBy: user.name, caption: req.body.caption})
-            .then(newPost=>res.json(newPost))
-        })
+            .then(user => {
+                user.createPost({ content: req.body.content, postedBy: user.name, caption: req.body.caption })
+                    .then(newPost => res.json(newPost))
+            })
     })
 
     // EDIT ONE POST
@@ -56,35 +62,38 @@ module.exports = (app, db) => {
     );
 
     // ADD COMMENT TO POST
-    app.post("/comment/:id", (req,res)=>{
+    app.post("/comment/:id", (req, res) => {
         db.Post.findByPk(req.params.id)
-        .then(myPost=>{
-            myPost.createComment(req.body)
-            .then(()=>res.json('Comment added'))
-        })
+            .then(myPost => {
+                db.User.findByPk(2)
+                    .then(myUser => {
+                        myPost.createComment({commented_by: myUser.name, comment: req.body.comment})
+                            .then(() => res.json('Comment added'))
+                    })
+            })
     })
 
     // USER LIKE POST
-    app.post("/like/:id", (req,res)=>{
+    app.post("/like/:id", (req, res) => {
         db.Post.findByPk(req.params.id)
-        .then(thisPost=>{
-            db.User.findByPk(1)
-            .then(myUser=>{
-                thisPost.addLike(myUser)
-                .then(()=>res.json('post liked!'))
+            .then(thisPost => {
+                db.User.findByPk(1)
+                    .then(myUser => {
+                        thisPost.addLike(myUser)
+                            .then(() => res.json('post liked!'))
+                    })
             })
-        })
     })
 
     // USER UNLIKE POST
-    app.put("/like/:id", (req,res)=>{
+    app.put("/like/:id", (req, res) => {
         db.Post.findByPk(req.params.id)
-        .then(thisPost=>{
-            db.User.findByPk(1)
-            .then(myUser=>{
-                thisPost.removeLike(myUser)
-                .then(()=>res.json('post unliked!'))
+            .then(thisPost => {
+                db.User.findByPk(1)
+                    .then(myUser => {
+                        thisPost.removeLike(myUser)
+                            .then(() => res.json('post unliked!'))
+                    })
             })
-        })
     })
 }

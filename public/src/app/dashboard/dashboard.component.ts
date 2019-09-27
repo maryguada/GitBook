@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   postCount = 5;
   loading: boolean;
   
+  
   constructor(
     private _router: Router,private _httpService: HttpService) { }
 
@@ -27,14 +28,13 @@ export class DashboardComponent implements OnInit {
   }
   getNews(){
     this._httpService.getAllNews().subscribe(data=>{
-      console.log(data)
       this.allnews=data['articles'].splice(0,10);
-      console.log(this.allnews.length);
     })
   }
 
   getPosts(){
     this._httpService.getAllPosts().subscribe(data => {
+      console.log(data)
       console.log(data)
       this.allPosts = data;
     })

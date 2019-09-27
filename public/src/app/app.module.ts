@@ -15,7 +15,7 @@ import { AuthGuard } from './auth.guard';
 import { TokenInterceptor } from './token-interceptor';
 import { EditorComponent } from './editor/editor.component';
 import { CommonModule } from '@angular/common';
-
+import { QuillModule } from 'ngx-quill'
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +32,7 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    
+    QuillModule.forRoot(),
     CommonModule
   ],
   providers: [HttpService, AuthGuard,

@@ -17,6 +17,10 @@ export class HttpService {
   getAllPosts(){
     return this.http.get("/posts");
   }
+
+  createPost(userPk, newPost){
+    return this.http.post(`/post/${userPk}`, newPost)
+  }
   
   getRecentPosts(count){
     console.log("recent posts...", count)
