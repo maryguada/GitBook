@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import { config } from './config';
 import { catchError, mapTo, tap } from 'rxjs/operators';
@@ -22,12 +22,15 @@ export class HttpService {
     console.log("recent posts...", count)
     return this.http.get("/recentposts/"+count);
   }
+<<<<<<< HEAD
 
   searchTags(tag){
     console.log(tag)
     return this.http.get("/searchtags/"+tag);
   }
 
+=======
+>>>>>>> f7fb1ea4c594b846bef54d473c0ba95176e17f32
   getAllNews() {
     return this.http.get("https://newsapi.org/v2/everything?q=tech&from=2019-09-23&sortBy=popularity&apiKey=44b0e2e4e0604086ab4ce55b311ebb48")
   }
@@ -38,7 +41,7 @@ export class HttpService {
     return this.http.post("/login", loginInfo).toPromise();
   }
   login(user): Observable<boolean> {
-    return this.http.post<any>(`${config.apiUrl}/login`, user)
+    return this.http.post<any>(`/login`, user)
       .pipe(
         tap(tokens => this.doLoginUser(user.username, tokens)),
         mapTo(true),
@@ -103,8 +106,11 @@ export class HttpService {
     localStorage.removeItem(this.JWT_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
   }
+<<<<<<< HEAD
 
   githubAuth(){
     return this.http.get('/auth/github');
   }
+=======
+>>>>>>> f7fb1ea4c594b846bef54d473c0ba95176e17f32
 }

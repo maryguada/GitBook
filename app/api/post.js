@@ -5,7 +5,10 @@ module.exports = (app, db) => {
 
     // GET ALL POSTS
     app.get("/posts", (req, res) =>
-        db.Post.findAll().then((result) => res.json(result))
+        db.Post.findAll({include: [{
+            all:true
+          }
+        ]}).then((result) => res.json(result))
     );
 
     // GET RECENT POSTS
@@ -52,6 +55,7 @@ module.exports = (app, db) => {
         }).then((result) => res.json(result))
     );
 
+<<<<<<< HEAD
     //SEARCH FOR TAG
     app.get("/searchtags/:tag", (req,res) => {
         db.Post.findAll({
@@ -59,5 +63,38 @@ module.exports = (app, db) => {
                 tag1: req.params.tag
             }
         }).then((result) => res.json(result))
+=======
+    // ADD COMMENT TO POST
+    app.post("/comment/:id", (req,res)=>{
+        db.Post.findByPk(req.params.id)
+        .then(myPost=>{
+            myPost.createComment(req.body)
+            .then(()=>res.json('Comment added'))
+        })
+    })
+
+    // USER LIKE POST
+    app.post("/like/:id", (req,res)=>{
+        db.Post.findByPk(req.params.id)
+        .then(thisPost=>{
+            db.User.findByPk(1)
+            .then(myUser=>{
+                thisPost.addLike(myUser)
+                .then(()=>res.json('post liked!'))
+            })
+        })
+    })
+
+    // USER UNLIKE POST
+    app.put("/like/:id", (req,res)=>{
+        db.Post.findByPk(req.params.id)
+        .then(thisPost=>{
+            db.User.findByPk(1)
+            .then(myUser=>{
+                thisPost.removeLike(myUser)
+                .then(()=>res.json('post unliked!'))
+            })
+        })
+>>>>>>> f7fb1ea4c594b846bef54d473c0ba95176e17f32
     })
 }

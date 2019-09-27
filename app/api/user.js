@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Post = require('../../models/Post')
-
 module.exports = (app, db) => {
 
     // GET ALL USERS
@@ -9,14 +8,38 @@ module.exports = (app, db) => {
 
     // GET ONE USER BY PRIMARY KEY(ID)
     app.get("/user/:id", (req, res) =>
-        db.User.findByPk(req.params.id).then((result) => res.json(result))
+        db.User.findByPk(req.params.id, {include: [{all:true}]}).then((result) => res.json(result))
     );
 
     // GET ONE USER BY USERNAME
     app.get("/getUser", (req, res) =>
-        db.User.findOne({ where: { username: req.body.username } })
+        db.User.findOne({ where: { username: sessionUser.username } })
             .then(result => res.json(result))
     );
+
+    // FOLLOW ONE USER 
+    app.post("/follow/:id", (req,res)=>{
+        db.User.findByPk(2)
+        .then(myUser=>{
+            db.User.findByPk(1)
+            .then(otherUser=>{
+                myUser.addFollower(otherUser)
+                .then(()=>res.json('worked'))
+            })
+        })
+    })
+
+    // FOLLOW ONE USER 
+    app.put("/follow/:id", (req,res)=>{
+        db.User.findByPk(2)
+        .then(myUser=>{
+            db.User.findByPk(1)
+            .then(otherUser=>{
+                myUser.removeFollower(otherUser)
+                .then(()=>res.json('worked'))
+            })
+        })
+    })
 
     // CREATE USER VIA BCRYPT(WITH TOKEN)
     app.post("/user", (req, res) => {
@@ -122,9 +145,7 @@ module.exports = (app, db) => {
             return res.status(401).send('Unauthorized request')
         }
         let payload = jwt.verify(token, 'secretKey')
-        if (!payload) {
-            return res.status(401).send('Unauthorized request')
-        }
+
         req.userId = payload.subject
         next()
     }

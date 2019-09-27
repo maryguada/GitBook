@@ -10,6 +10,13 @@ const appPost = require('./app/api/post')
 const db = require('./models')
 const User = require('./models').User
 const bodyParser = require('body-parser')
+<<<<<<< HEAD
+=======
+const http = require('http').Server(app);
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views/');
+
+>>>>>>> f7fb1ea4c594b846bef54d473c0ba95176e17f32
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -18,6 +25,11 @@ const Post = require('./models/Post')
 const bcrypt = require('bcrypt')
 const randtoken = require('rand-token')
 const refreshTokens = {};
+<<<<<<< HEAD
+=======
+
+const session = require('express-session')
+>>>>>>> f7fb1ea4c594b846bef54d473c0ba95176e17f32
 
 const SECRET = 'VERY_SECRET_KEY!';
 const passportOpts = {
@@ -25,8 +37,15 @@ const passportOpts = {
   secretOrKey: SECRET
 };
 
+app.use(session({
+  secret: 'keyboardkitteh',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}))
 app.use(cors())
 app.use(authPassport.initialize())
+app.use(authPassport.session());
 // app.use(gitPassport.initialize())
 app.use(bodyParser.urlencoded({
   extended: true
@@ -92,13 +111,12 @@ appPost(app, db)
 
 
 
-app.get("/users", authPassport.authenticate('jwt'), (req, res) =>
+app.get("/users", (req, res) =>
   User.findAll({
     include: [{
-      model: Post,
-      as: 'posts',
-      required: false
-    }]
+      all:true
+    }
+  ]
   }).then((result) => res.json(result))
 );
 
@@ -116,7 +134,7 @@ app.post('/login', (req, res) => {
         bcrypt.compare(userData.password, result.password)
           .then(isValid => {
             if (isValid) {
-              const token = jwt.sign({ user:result }, SECRET, { expiresIn: 600 })
+              const token = jwt.sign({ user: result }, SECRET, { expiresIn: 600 })
               console.log(token)
               const refreshToken = randtoken.uid(256);
               refreshTokens[refreshToken] = result.username;
@@ -131,6 +149,40 @@ app.post('/login', (req, res) => {
     })
 })
 
+<<<<<<< HEAD
+=======
+
+app.post('/logout', function (req, res) {
+  const refreshToken = req.body.refreshToken;
+  if (refreshToken in refreshTokens) {
+    delete refreshTokens[refreshToken];
+  }
+  res.sendStatus(204);
+});
+
+app.post('/refresh', function (req, res) {
+  const refreshToken = req.body.refreshToken;
+
+
+  if (refreshToken in refreshTokens) {
+    const user = {
+      'username': refreshTokens[refreshToken],
+      'role': 'admin'
+    }
+    const token = jwt.sign(user, SECRET, { expiresIn: 600 });
+    res.json({ jwt: token })
+  }
+  else {
+    res.sendStatus(401);
+  }
+});
+
+
+app.get('/chat', function(req, res) {
+  res.render("chat");
+})
+
+>>>>>>> f7fb1ea4c594b846bef54d473c0ba95176e17f32
 // app.post('/login', function (req, res) { 
 //   User.findOne({ where: { username: req.body.username } })
 //   .then(data=>{
