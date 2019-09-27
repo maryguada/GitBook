@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,10 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptor } from './token-interceptor';
-
+import { EditorComponent } from './editor/editor.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -22,13 +23,17 @@ import { TokenInterceptor } from './token-interceptor';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditorComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    
+    CommonModule
   ],
   providers: [HttpService, AuthGuard,
     {
@@ -36,6 +41,7 @@ import { TokenInterceptor } from './token-interceptor';
       useClass: TokenInterceptor,
       multi:true
     }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

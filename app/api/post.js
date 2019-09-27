@@ -63,4 +63,28 @@ module.exports = (app, db) => {
             .then(()=>res.json('Comment added'))
         })
     })
+
+    // USER LIKE POST
+    app.post("/like/:id", (req,res)=>{
+        db.Post.findByPk(req.params.id)
+        .then(thisPost=>{
+            db.User.findByPk(1)
+            .then(myUser=>{
+                thisPost.addLike(myUser)
+                .then(()=>res.json('post liked!'))
+            })
+        })
+    })
+
+    // USER UNLIKE POST
+    app.put("/like/:id", (req,res)=>{
+        db.Post.findByPk(req.params.id)
+        .then(thisPost=>{
+            db.User.findByPk(1)
+            .then(myUser=>{
+                thisPost.removeLike(myUser)
+                .then(()=>res.json('post unliked!'))
+            })
+        })
+    })
 }

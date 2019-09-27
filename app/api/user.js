@@ -8,7 +8,7 @@ module.exports = (app, db) => {
 
     // GET ONE USER BY PRIMARY KEY(ID)
     app.get("/user/:id", (req, res) =>
-        db.User.findByPk(req.params.id).then((result) => res.json(result))
+        db.User.findByPk(req.params.id, {include: [{all:true}]}).then((result) => res.json(result))
     );
 
     // GET ONE USER BY USERNAME
@@ -17,13 +17,25 @@ module.exports = (app, db) => {
             .then(result => res.json(result))
     );
 
-    // LIKE ONE USER 
-    app.post("/like/:id", (req,res)=>{
-        db.User.findByPk(4)
+    // FOLLOW ONE USER 
+    app.post("/follow/:id", (req,res)=>{
+        db.User.findByPk(2)
         .then(myUser=>{
             db.User.findByPk(1)
             .then(otherUser=>{
                 myUser.addFollower(otherUser)
+                .then(()=>res.json('worked'))
+            })
+        })
+    })
+
+    // FOLLOW ONE USER 
+    app.put("/follow/:id", (req,res)=>{
+        db.User.findByPk(2)
+        .then(myUser=>{
+            db.User.findByPk(1)
+            .then(otherUser=>{
+                myUser.removeFollower(otherUser)
                 .then(()=>res.json('worked'))
             })
         })
