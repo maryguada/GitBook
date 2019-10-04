@@ -14,6 +14,10 @@ export class HttpService {
 
   constructor(private http: HttpClient) {
   }
+   addComment(postId, comment){
+     return this.http.post(`/comment/${postId}`, comment)
+   }
+
   getAllPosts(){
     return this.http.get("/posts");
   }

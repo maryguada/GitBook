@@ -18,10 +18,13 @@
           <a class="nav-link cool-link" href="" [routerLink]="['/dashboard']"><i class="fas fa-home"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link cool-link" href="/chat"><i class="fas fa-comments"></i></a>
+          <a class="nav-link cool-link" href="" [routerLink]="['/editor']"><i class="fas fa-laptop-code"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link cool-link" href="/find_cinema"><i class="fas fa-bell"></i></a>
+          <a class="nav-link cool-link" href="/chat"><i class="fas fa-comments"><span class="badge badge-danger">8</span></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link cool-link" href="/find_cinema"><i class="fas fa-bell"><span class="badge badge-danger">3</span></i></a>
         </li>
         <li class="nav-item">
           <a class="nav-link cool-link" href="" [routerLink]="['/dashboard/profile']"><i class="fas fa-user"></i></a>
@@ -29,4 +32,5 @@
       </ul>
     </div>
   </div>
-  <router-outlet></router-outlet>
+</div>
+<router-outlet></router-outlet>

@@ -23,7 +23,7 @@
                 <div class="posts" *ngFor="let post of recentPosts"
                     style="box-shadow:0px 0px 15px 5px #d1d1d1;padding:20px;border-radius:5px;margin-bottom:20px;border:solid 1px black">
                     <h1>{{post.caption}}</h1>
-                    <p style="margin-top:-10px">Posted by: {{post.postedBy}} on <span
+                    <p class="text-info" style="margin-top:-10px">Posted by: {{post.postedBy}} on <span
                             style="font-weight:700">{{post.createdAt}}</span></p>
                     <a href="" class="badge badge-primary">Like</a>
                     <div class="content p-3 border rounded mb-2" style="font-family: 'Roboto Mono', monospace;">
@@ -32,13 +32,15 @@
                     
                         </p>
                     </div>
-                    <div class="comments border ml-3" *ngFor="let comment of post.comments">
-                        <p class="m-0">{{ comment.comment }}</p>
+                    <h5>Comments:</h5>
+                    <div class="comments ml-3" *ngFor="let comment of post.comments">
+                        <h5 class="text-success d-inline-block">{{comment.commented_by}}</h5><span> says:</span>
+                        <p class="ml-3">{{ comment.comment }}</p>
                     </div>
-                    <form action="">
+                    <form (submit)="onSubmitComment(post.id)">
                         <div class="form-group">
-                            <textarea class="form-control" name="" id="" cols="30" rows="3"
-                                placeholder="Say something.."></textarea>
+                            <textarea class="form-control" name="newComment.comment" id="" cols="30" rows="3"
+                                placeholder="Say something.." [(ngModel)]="newComment.comment"></textarea>
                         </div>
                         <button class="btn btn-success btn-sm ml-auto">Comment</button>
                     </form>
@@ -50,7 +52,7 @@
         </div>
 
         <div class="container col-md-3 col-sm-12 text-center p-2" style="height:997px;overflow:auto">
-            <h1>NewsFeed</h1>
+            <h1 class="mb-4">NewsFeed</h1>
             <div *ngFor="let news of allnews"
                 style="box-shadow:0px 0px 5px 2px #d1d1d1;border-radius:5px;margin-bottom:15px;padding:10px;border:solid 1px black">
                 <h3>{{news.title}}</h3>

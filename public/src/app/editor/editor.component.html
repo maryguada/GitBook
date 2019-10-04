@@ -3,8 +3,6 @@
         <div class="container mt-2 mb-2">
             <h2 class="text-center"> Editor</h2>
             <form [formGroup]="editorForm" (submit)="onSubmitCreate(1)">
-                {{newPost | json}}
-                {{ editorContent }}
                 <div class="form-group">
                     <small>Add content first</small>
                     <input class="form-control" formControlName='editor' type="text" name="newPost.caption" id="" placeholder="Caption"

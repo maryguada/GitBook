@@ -68,6 +68,8 @@ module.exports = (app, db) => {
                 tag1: req.params.tag
             }
         }).then((result) => res.json(result))
+    })
+
     // ADD COMMENT TO POST
     app.post("/comment/:id", (req, res) => {
         db.Post.findByPk(req.params.id)
@@ -103,5 +105,4 @@ module.exports = (app, db) => {
                     })
             })
         })
-    })
 }

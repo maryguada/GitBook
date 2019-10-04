@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   displayedPosts: any;
   postCount = 5;
   loading: boolean;
+  newComment: any;
   
   
   constructor(
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit {
     this.getNews();
     this.getPosts();
     this.getRecentPosts();
+    this.newComment = {"comment":""}
   }
   getNews(){
     this._httpService.getAllNews().subscribe(data=>{
@@ -37,6 +39,12 @@ export class DashboardComponent implements OnInit {
       console.log(data)
       console.log(data)
       this.allPosts = data;
+    })
+  }
+
+  onSubmitComment(postId){
+    this._httpService.addComment(postId, this.newComment).subscribe(()=>{
+      this.getPosts();
     })
   }
 

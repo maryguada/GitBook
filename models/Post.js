@@ -4,9 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     caption: DataTypes.STRING,
     content: DataTypes.TEXT,
     postedBy: DataTypes.STRING,
-    tag1: DataTypes.STRING,
-    tag2: DataTypes.STRING,
-    tag3: DataTypes.STRING,
   }, {});
   Post.associate = function(models) {
     // Post belongsTo User
