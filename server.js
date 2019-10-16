@@ -13,6 +13,8 @@ const bodyParser = require('body-parser')
 const http = require('http').Server(app);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views/');
+// const path = require("path");
+// testing
 
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
@@ -185,6 +187,6 @@ app.all("*", (req, res, next) => {
   res.sendFile(path.resolve("./public/dist/public/index.html"))
 });
 
-
-
 app.listen(8000, () => console.log("listening on port 8000"));
+
+

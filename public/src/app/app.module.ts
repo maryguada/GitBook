@@ -7,11 +7,21 @@ import { HttpService } from './http.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
+<<<<<<< HEAD
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
+=======
+<<<<<<< HEAD
+import { LoginComponent } from './login/login.component';
+import { AboutComponent } from './about/about.component'
+=======
+import { LoginComponent } from './login/login.component'
+import { ProfileComponent } from './profile/profile.component';
+>>>>>>> ac96db2636bc641a7513daf527fd1f287964ab6f
+>>>>>>> 1ae0f88ca7838ecad0ef35b69f1ec415ec0dc4a8
 
 import { TokenInterceptor } from './token-interceptor';
 import { EditorComponent } from './editor/editor.component';
@@ -25,9 +35,17 @@ import { QuillModule } from 'ngx-quill'
     DashboardComponent,
     HomeComponent,
     LoginComponent,
+<<<<<<< HEAD
     RegisterComponent,
     ProfileComponent,
     EditorComponent
+=======
+<<<<<<< HEAD
+    AboutComponent
+=======
+    ProfileComponent
+>>>>>>> ac96db2636bc641a7513daf527fd1f287964ab6f
+>>>>>>> 1ae0f88ca7838ecad0ef35b69f1ec415ec0dc4a8
   ],
   imports: [
     FormsModule,
